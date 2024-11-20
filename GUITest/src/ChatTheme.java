@@ -65,7 +65,7 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 		JButton menuBtn = new JButton("");
 		menuBtn.setBackground(new Color(237, 244, 255));
 		menuBtn.setBounds(410, 8, 20, 20);
-		menuBtn.setIcon(new ImageIcon("C:\\java\\GUITest\\images\\menu.png"));
+		menuBtn.setIcon(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\menu.png"));
 		menuBtn.setFocusable(false);
 		menuBtn.setBorderPainted(false);
 		menuBtn.setContentAreaFilled(false);
@@ -73,22 +73,29 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 		
 		JPopupMenu popupMenu = new JPopupMenu();
 		popupMenu.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
-		popupMenu.setPopupSize(new Dimension(105, 60));
+		popupMenu.setPopupSize(new Dimension(103, 60));
 		popupMenu.setBorderPainted(false);
 		addPopup(menuBtn, popupMenu);
 		
 		JButton noticeBtn = new JButton("채팅 공지");
-		noticeBtn.setIcon(new ImageIcon("C:\\java\\GUITest\\images\\announceIcon.png"));
+		noticeBtn.setVerticalAlignment(SwingConstants.TOP);
+		noticeBtn.setIcon(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\announceIcon.png"));
 		noticeBtn.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
+		noticeBtn.setFocusable(false);
+//		noticeBtn.setBorderPainted(false);
+		noticeBtn.setContentAreaFilled(false);
 		popupMenu.add(noticeBtn);
 		
 		JButton voteBtn = new JButton("투표 기능");
+		voteBtn.setVerticalAlignment(SwingConstants.TOP);
 		voteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		voteBtn.setHorizontalAlignment(SwingConstants.LEFT);
-		voteBtn.setIcon(new ImageIcon("C:\\java\\GUITest\\images\\voteIcon.png"));
+		voteBtn.setFocusable(false);
+//		noticeBtn.setBorderPainted(false);
+		voteBtn.setContentAreaFilled(false);
+		voteBtn.setIcon(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\voteIcon.png"));
 		voteBtn.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
 		popupMenu.add(voteBtn);
 
@@ -99,7 +106,7 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 
 		JLabel userImgLabel = new JLabel("");
 		userImgLabel.setBounds(80, 50, 25, 30);
-		userImgLabel.setIcon(new ImageIcon("C:\\java\\GUITest\\images\\user1.png"));
+		userImgLabel.setIcon(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\user1.png"));
 		ChatPanel.add(userImgLabel);
 
 		JLabel nameLabel = new JLabel("박민주");
@@ -108,7 +115,7 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 		nameLabel.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 16));
 		ChatPanel.add(nameLabel);
 
-		JLabel profileLabel = new JLabel(new ImageIcon("C:\\java\\GUITest\\images\\profile.png"));
+		JLabel profileLabel = new JLabel(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\profile.png"));
 		profileLabel.setForeground(new Color(255, 255, 255));
 		profileLabel.setBackground(new Color(255, 255, 255));
 		profileLabel.setBounds(10, 13, 66, 66);
@@ -154,7 +161,7 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 			}
 		});
 		emojiBtn.setBackground(new Color(255, 255, 255));
-		emojiBtn.setIcon(new ImageIcon("C:\\java\\GUITest\\images\\emoji.png"));
+		emojiBtn.setIcon(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\emoji.png"));
 		emojiBtn.setFocusPainted(false);
 		emojiBtn.setBorderPainted(false);
 		emojiBtn.setContentAreaFilled(false);

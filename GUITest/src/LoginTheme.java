@@ -59,7 +59,7 @@
 //		JLabel icon = new JLabel("");
 //		icon.setBackground(new Color(0, 0, 0));
 //		icon.setBounds(64, 32, 176, 118);
-//		icon.setIcon(new ImageIcon("C:\\java\\GUITest\\images\\msg_icon.png"));
+//		icon.setIcon(new ImageIcon("C:\\pamil\\git\\GUITest\\images\\msg_icon.png"));
 //		LoginPanel.add(icon);
 //		
 //		JLabel IPLable = new JLabel("IP Address");
