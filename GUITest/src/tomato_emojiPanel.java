@@ -92,7 +92,7 @@ public class tomato_emojiPanel extends JPanel {
 			new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\emoji\\tomato\\touched.png"),
 	};
 	
-	private ChatTheme chat;
+	private static ChatTheme chat;
 	private JLabel emoji;
 	public int emojiNum = 0;
 	public String emojipath = null;
@@ -130,7 +130,7 @@ public class tomato_emojiPanel extends JPanel {
 			emojiNum = 1;
 			emojipath = emojiPath[emojiNum - 1].toString();
 			System.out.println(emojipath);
-			chat.addEmoji(emojipath);
+//			getChat().addEmoji(emojipath);
 		}
 	}
 

@@ -9,9 +9,18 @@ import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
+
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
 import java.awt.event.ActionListener;
@@ -32,15 +41,16 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 	private JTextArea entryArea;
 	public JTextArea chatArea;
 	private JScrollPane scrollPane;
-	private tomato_emojiPanel tomato;
+	private static tomato_emojiPanel tomato;
 	private JLabel emojiLabel;
 	private JScrollPane chatScroll;
+	private AlphaComposite alphaComposite;
+	private static ChatTheme frame = new ChatTheme();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChatTheme frame = new ChatTheme();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,14 +58,36 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 			}
 		});
 	}
+	
+	public void setFrame(ChatTheme frame) {
+		this.frame = frame;
+	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+	public void setChatPanel(JPanel chatPanel) {
+		this.ChatPanel = chatPanel;
+	}
 
-	public ChatTheme() {		
+	public ChatTheme() {
 		setTitle("KakaoTalk");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(400, 100, 450, 650);
 		ChatPanel = new JPanel();
 		ChatPanel.setBackground(new Color(237, 244, 255));
 		ChatPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		setUndecorated(true);
+		
+		// window의 AWT 사용해서 frame 투명도 설정
+		// 투명도 지원 여부 출력
+		if (!GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice()
+                .isWindowTranslucencySupported(GraphicsDevice.WindowTranslucency.TRANSLUCENT)) {
+            System.out.println("이 시스템은 투명도를 지원하지 않습니다.");
+            return;
+        }
 
 		tomato = new tomato_emojiPanel(this);
 
@@ -72,17 +104,18 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 		ChatPanel.add(menuBtn);
 		
 		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.setBackground(new Color(255, 255, 255));
 		popupMenu.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
 		popupMenu.setPopupSize(new Dimension(103, 60));
 		popupMenu.setBorderPainted(false);
 		addPopup(menuBtn, popupMenu);
 		
 		JButton noticeBtn = new JButton("채팅 공지");
+		noticeBtn.setBackground(new Color(255, 255, 255));
 		noticeBtn.setVerticalAlignment(SwingConstants.TOP);
 		noticeBtn.setIcon(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\announceIcon.png"));
 		noticeBtn.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
 		noticeBtn.setFocusable(false);
-//		noticeBtn.setBorderPainted(false);
 		noticeBtn.setContentAreaFilled(false);
 		popupMenu.add(noticeBtn);
 		
@@ -93,7 +126,6 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 			}
 		});
 		voteBtn.setFocusable(false);
-//		noticeBtn.setBorderPainted(false);
 		voteBtn.setContentAreaFilled(false);
 		voteBtn.setIcon(new ImageIcon("C:\\Users\\pamil\\git\\kakaotalk\\GUITest\\images\\voteIcon.png"));
 		voteBtn.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
@@ -110,7 +142,6 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 		ChatPanel.add(userImgLabel);
 
 		JLabel nameLabel = new JLabel("박민주");
-		
 		nameLabel.setBounds(80, 18, 306, 20);
 		nameLabel.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 16));
 		ChatPanel.add(nameLabel);
@@ -141,18 +172,29 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 		panel.setLayout(null);
 
 		sendBtn = new JButton("전송");
-		sendBtn.setBounds(377, 0, 61, 37);
+		sendBtn.setBounds(372, -5, 63, 39);
 		panel.add(sendBtn);
 		sendBtn.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
-		sendBtn.setBackground(new Color(255, 255, 255));
+		sendBtn.setBackground(new Color(255, 235, 0));
 		sendBtn.setFocusPainted(false);
+		sendBtn.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
 		sendBtn.addActionListener(new Myaction());
-		visibleSlider.setBounds(285, 14, 87, 21);
-		panel.add(visibleSlider);
+		visibleSlider.setValue(100);
+		visibleSlider.setBounds(280, 8, 87, 21);
 		visibleSlider.setBackground(new Color(255, 255, 255));
+		visibleSlider.setMinimum(20);
+		visibleSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int value = visibleSlider.getValue(); // 슬라이더 값 가져오기
+                getFrame().setOpacity(value*0.01f);
+            }
+        });
+		panel.add(visibleSlider);
+		
 
 		JButton emojiBtn = new JButton("");
-		emojiBtn.setBounds(0, 0, 35, 37);
+		emojiBtn.setBounds(0, 0, 37, 37);
 		panel.add(emojiBtn);
 		emojiBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,7 +209,7 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 		emojiBtn.setContentAreaFilled(false);
 
 		JScrollPane entryScroll = new JScrollPane();
-		entryScroll.setBounds(0, 459, 438, 119);
+		entryScroll.setBounds(5, 459, 428, 115);
 		entryScroll.setFocusable(false);
 		entryScroll.getVerticalScrollBar().setUnitIncrement(10);
 		entryScroll.setBorder(null);
@@ -186,11 +228,18 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 			}
 		});
 
-		entryArea.setTabSize(4);
+		entryArea.setTabSize(0);
 		entryScroll.setViewportView(entryArea);
-		entryArea.setFont(new Font("한컴 고딕", Font.PLAIN, 15));
+		entryArea.setFont(new Font("프리젠테이션 5 Medium", Font.PLAIN, 15));
 		entryArea.setBackground(new Color(255, 255, 255));
 		entryArea.setLineWrap(true);
+		
+		JPanel bgPanel = new JPanel();
+		bgPanel.setBorder(null);
+		bgPanel.setBackground(new Color(255, 255, 255));
+		bgPanel.setBounds(0, 459, 438, 119);
+		ChatPanel.add(bgPanel);
+		
 		
 		chatArea.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
@@ -268,6 +317,7 @@ public class ChatTheme<tomato_emojiaPanel> extends JFrame {
 				entryArea.requestFocus(); // 메시지를 보내고 커서를 다시 텍스트 필드로 위치시킨다
 			}
 		}
+		
 
 		// 화면에 출력
 		public void AppendText(String msg) {
